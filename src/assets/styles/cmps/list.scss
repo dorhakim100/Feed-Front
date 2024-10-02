@@ -2,16 +2,25 @@
     --min-column-size: 220px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
+    // grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
+    grid-template-columns: 1fr;
     gap: .5em;
+    height: calc(100vh - 112px - 490px);
+    height: 250px;
+    overflow: auto;
 
     li {
         display: grid;
         grid-template-columns: max-content auto;
         padding: .5em;
-        background-color: $clr2;
+        background-color: $primary-dark;
+        border-radius: 5px;
 
-        color: $clr6;
+        color: $gray1;
+        a{
+            color: white;
+
+        }
 
         .actions {
             justify-self: end;

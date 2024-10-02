@@ -18,6 +18,7 @@ import { CommentFilter } from '../cmps/CommentFilter'
 
 export function CommentIndex() {
   const [filterBy, setFilterBy] = useState(commentService.getDefaultFilter())
+  console.log(filterBy)
   const comments = useSelector(
     (storeState) => storeState.commentModule.comments
   )
@@ -63,7 +64,6 @@ export function CommentIndex() {
   return (
     <main className='comment-index'>
       <header>
-        <h2>Comments</h2>
         {userService.getLoggedinUser() && (
           <button onClick={onAddComment}>Add a Comment</button>
         )}

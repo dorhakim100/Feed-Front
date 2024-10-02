@@ -14,7 +14,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.2",
+    "@mui/joy": "^5.0.0-beta.48",
+    "@mui/material": "^6.1.2",
+    "@mui/x-date-pickers": "^7.18.0",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.13",
     "mui": "^0.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

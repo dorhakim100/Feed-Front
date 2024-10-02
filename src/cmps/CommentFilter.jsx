@@ -1,11 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+import { Calender } from './Calender.jsx'
+
+import { Button } from '@mui/material'
+import Box from '@mui/joy/Box'
+import Textarea from '@mui/joy/Textarea'
+
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
 export function CommentFilter({ filterBy, setFilterBy }) {
   const [filterToEdit, setFilterToEdit] = useState(structuredClone(filterBy))
+  const [isCalender, setIsCalender] = useState(false)
+  const filterRef = useRef()
 
   useEffect(() => {
     setFilterBy(filterToEdit)
   }, [filterToEdit])
+
+  useEffect(() => {
+    filterRef.current.style.height = '145.5px'
+    setIsCalender(false)
+  }, [])
 
   function handleChange(ev) {
     const type = ev.target.type
@@ -26,15 +41,24 @@ export function CommentFilter({ filterBy, setFilterBy }) {
   }
 
   function clearFilter() {
-    setFilterToEdit({ ...filterToEdit, txt: '', minSpeed: '', maxPrice: '' })
+    setFilterToEdit({ ...filterToEdit, txt: '' })
   }
 
   function clearSort() {
     setFilterToEdit({ ...filterToEdit, sortField: '', sortDir: '' })
   }
 
+  function onSetIsCalender() {
+    if (filterRef.current.style.height === '490.5px') {
+      filterRef.current.style.height = '145.5px'
+    } else {
+      filterRef.current.style.height = '490.5px'
+    }
+    setIsCalender((prev) => (prev = !prev))
+  }
+
   return (
-    <section className='comment-filter'>
+    <section className='comment-filter' ref={filterRef}>
       <h3>Filter:</h3>
       <input
         type='text'
@@ -44,76 +68,43 @@ export function CommentFilter({ filterBy, setFilterBy }) {
         onChange={handleChange}
         required
       />
-      <input
-        type='number'
-        min='0'
-        name='minSpeed'
-        value={filterToEdit.minSpeed}
-        placeholder='min. speed'
-        onChange={handleChange}
-        required
-      />
-      <button className='btn-clear' onClick={clearFilter}>
+      <Button
+        variant='contained'
+        className='calender-button'
+        onClick={() => onSetIsCalender()}
+      >
+        <CalendarMonthIcon />
+      </Button>
+      {isCalender && <Calender />}
+      <Button className='btn-clear' variant='contained' onClick={clearFilter}>
         Clear
-      </button>
-      <h3>Sort:</h3>
-      <div className='sort-field'>
-        <label>
-          <span>Speed</span>
-          <input
-            type='radio'
-            name='sortField'
-            value='speed'
-            checked={filterToEdit.sortField === 'speed'}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          <span>Vendor</span>
-          <input
-            type='radio'
-            name='sortField'
-            value='vendor'
-            checked={filterToEdit.sortField === 'vendor'}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          <span>Owner</span>
-          <input
-            type='radio'
-            name='sortField'
-            value='owner'
-            checked={filterToEdit.sortField === 'owner'}
-            onChange={handleChange}
-          />
-        </label>
+      </Button>
+      <div className='sort-container'>
+        <h3>Sort:</h3>
+
+        <div className='sort-dir'>
+          <label>
+            <span>Asce</span>
+            <input
+              type='radio'
+              name='sortDir'
+              value='1'
+              checked={filterToEdit.sortDir === 1}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            <span>Desc</span>
+            <input
+              type='radio'
+              name='sortDir'
+              value='-1'
+              onChange={handleChange}
+              checked={filterToEdit.sortDir === -1}
+            />
+          </label>
+        </div>
       </div>
-      <div className='sort-dir'>
-        <label>
-          <span>Asce</span>
-          <input
-            type='radio'
-            name='sortDir'
-            value='1'
-            checked={filterToEdit.sortDir === 1}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          <span>Desc</span>
-          <input
-            type='radio'
-            name='sortDir'
-            value='-1'
-            onChange={handleChange}
-            checked={filterToEdit.sortDir === -1}
-          />
-        </label>
-      </div>
-      <button className='btn-clear' onClick={clearSort}>
-        Clear
-      </button>
     </section>
   )
 }

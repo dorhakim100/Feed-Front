@@ -40,5 +40,7 @@
 main{
   justify-self: center;
   width: 580px;
+  height: calc(100vh - 112px);
 
+  overflow-y: auto;
 }

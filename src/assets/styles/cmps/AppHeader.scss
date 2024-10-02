@@ -1,9 +1,13 @@
 .app-header {
     display: flex;
     min-height: 3.5rem;
-
-    background-color: $clr4;
+    background-color: $primary-dark;
+    color: white;
     padding: rem(10px) 1rem;
+
+    a{
+        color: white;
+    }
     
     nav {
         display: flex;
@@ -14,7 +18,7 @@
         font-size: .8em;
 
         .active {
-            color: $clr1;
+            color: $primary-contrast;
         }
 
         .logo {

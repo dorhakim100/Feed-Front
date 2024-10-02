@@ -18,20 +18,23 @@ export const commentService = {
 }
 window.cs = commentService
 
-async function query(filterBy = { txt: '', dateAdded: '', sortDirection: 1 }) {
+async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
   var comments = await storageService.query(STORAGE_KEY)
-  const { txt, dateAdded, sortDirection } = filterBy
+  const { txt, dateAdded, sortDir } = filterBy
 
   if (txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     comments = comments.filter(
-      (comment) => regex.test(comment.vendor) || regex.test(comment.description)
+      (comment) => regex.test(comment.title) || regex.test(comment.txt)
     )
   }
   if (dateAdded) {
   }
 
-  if (sortDirection) {
+  if (sortDir !== undefined) {
+    comments = comments.sort((comment1, comment2) => {
+      return comment1.title.localeCompare(comment2.title) * sortDir
+    })
   }
 
   return comments
@@ -95,7 +98,7 @@ function getDefaultFilter() {
   return {
     txt: '',
     dateAdded: '',
-    sortDirection: 1,
+    sortDir: 1,
   }
 }
 
