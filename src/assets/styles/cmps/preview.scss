@@ -1,4 +1,32 @@
 .preview {
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5em;
+    align-items: center;
+    justify-items: center;
+
+    .img-container{
+        // background-color: white;
+        border-radius: 50px;
+        background-color: $primary-light;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+
+        img{
+            width: 50px;
+            border-radius: 50px;
+            height: 50px;
+            object-fit: scale-down;
+        }
+    }
+
+    .title-container{
+        display: flex;
+        flex-direction: column;
+    }
     a {
         color: $clr4;
         padding: 0;

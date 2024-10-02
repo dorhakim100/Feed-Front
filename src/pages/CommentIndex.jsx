@@ -21,6 +21,7 @@ export function CommentIndex() {
   const comments = useSelector(
     (storeState) => storeState.commentModule.comments
   )
+  console.log(comments)
 
   useEffect(() => {
     loadComments(filterBy)

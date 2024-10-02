@@ -1,20 +1,16 @@
 import { Link } from 'react-router-dom'
 
 export function CommentPreview({ comment }) {
+  console.log(comment)
   return (
     <article className='preview'>
-      <header>
-        <Link to={`/comment/${comment._id}`}>{comment.vendor}</Link>
-      </header>
-
-      <p>
-        Speed: <span>{comment.speed.toLocaleString()} Km/h</span>
-      </p>
-      {comment.owner && (
-        <p>
-          Owner: <span>{comment.owner.fullname}</span>
-        </p>
-      )}
+      <div className='img-container'>
+        {comment.owner && <img src={comment.owner.imgUrl} alt='' />}
+      </div>
+      <div className='title-container'>
+        <Link to={`/comment/${comment._id}`}>{comment.title}</Link>
+        <span>{comment.email}</span>
+      </div>
     </article>
   )
 }
