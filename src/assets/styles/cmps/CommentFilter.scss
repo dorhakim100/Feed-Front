@@ -8,8 +8,9 @@
   transition: 0.2s ease-out;
 
 
-  background-color: $primary-light;
+  background-color: $primary-opacity-light;
   padding: 0.5em;
+  color: white;
 
   h3 {
     grid-column: 1 / 2;
@@ -29,9 +30,17 @@
     border-block-end: 1px solid $gray1;
     border-radius: 5px;
     transition: 0.1s ease-out;
+    outline: 2px solid $button-disabled-bg;
+    border: none;
+    border-radius: 3px;
+    transition: 0.2s;
+    &:focus{
+
+        outline:  2px solid $primary-dark;
+    }
     &:focus {
-      outline: none;
-      background-color: $gray1;
+      // outline: none;
+      // background-color: $gray1;
     }
   }
 
@@ -90,6 +99,17 @@
     &:has(:checked) span {
       background-color: $primary-color;
       color: $gray1;
+    }
+  }
+  // calender month
+  .css-31ca4x-MuiPickersFadeTransitionGroup-root{
+    color: $primary-dark;
+  }
+  // calender day
+  .css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root{
+    transition: 0.1s ease-out;
+    &:hover{
+      background-color: $hover-color;
     }
   }
 }

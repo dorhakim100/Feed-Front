@@ -1,0 +1,51 @@
+form{
+
+    background-color: $background-color;
+    // border: 2.5px solid $focus-border-color;
+    border-radius: 3px;
+    padding: 0.5em;
+    margin: 0.3em 0em 0.3em 0em;
+    display: flex;
+    flex-direction: column;
+    color: $primary-dark;
+
+    
+    .input-container{
+        display: grid;
+        grid-template-columns: 3em 1fr;
+        grid-template-rows: auto 30px;
+
+        gap: 0.5em;
+        // place-items: center;
+        
+        input, textarea{
+
+            // justify-self: end;
+            grid-column: 1/-1;
+            
+            outline: 2px solid $button-disabled-bg;
+            border: none;
+            border-radius: 3px;
+            transition: 0.2s;
+            &:focus{
+   
+                outline:  2px solid $focus-border-secondary;
+            }
+        }
+        input{
+            height: 3.5em;
+        }
+        span{
+            justify-self: end;
+            grid-row: 2/3;
+            grid-column: 2/3;
+        }
+    }
+
+    button{
+        place-self: end;
+        height: 3em;
+
+
+    }
+}

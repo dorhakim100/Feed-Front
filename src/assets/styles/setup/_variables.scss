@@ -17,6 +17,8 @@ $primary-color: #1976d2; // MUI blue
 $primary-light: #63a4ff;
 $primary-dark: #004ba0;
 $primary-contrast: #ffffff;
+$primary-opacity-light: #a4d1ff;
+
 
 // Secondary color palette
 $secondary-color: #dc004e; // MUI pink/red
@@ -40,6 +42,7 @@ $info-color: #2196f3; // Light blue for information
 // Hover and focus effects
 $hover-color: rgba(25, 118, 210, 0.1); // Soft blue hover for inputs/buttons
 $focus-border-color: #1976d2; // Focus outline for form elements
+$focus-border-secondary: #69a6e3; // Focus outline for form elements
 
 // Button colors
 $button-bg: #1976d2;

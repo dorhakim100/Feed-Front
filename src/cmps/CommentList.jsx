@@ -1,4 +1,4 @@
-import { userService } from '../services/user'
+import { userService } from '../services/user/user.service'
 import { CommentPreview } from './CommentPreview'
 
 export function CommentList({ comments, onRemoveComment, onUpdateComment }) {

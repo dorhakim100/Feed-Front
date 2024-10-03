@@ -11,18 +11,19 @@ import {
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { commentService } from '../services/comment/comment.service'
-import { userService } from '../services/user'
+import { userService } from '../services/user/user.service'
 
 import { CommentList } from '../cmps/CommentList'
 import { CommentFilter } from '../cmps/CommentFilter'
+import { Form } from '../cmps/Form'
 
 export function CommentIndex() {
   const [filterBy, setFilterBy] = useState(commentService.getDefaultFilter())
-  console.log(filterBy)
+  // console.log(filterBy)
   const comments = useSelector(
     (storeState) => storeState.commentModule.comments
   )
-  console.log(comments)
+  // console.log(comments)
 
   useEffect(() => {
     loadComments(filterBy)
@@ -68,6 +69,7 @@ export function CommentIndex() {
           <button onClick={onAddComment}>Add a Comment</button>
         )}
       </header>
+      <Form />
       <CommentFilter filterBy={filterBy} setFilterBy={setFilterBy} />
       <CommentList
         comments={comments}
