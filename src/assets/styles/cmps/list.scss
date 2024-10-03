@@ -15,12 +15,14 @@
         padding: .5em;
         background-color: $primary-dark;
         border-radius: 5px;
+        height: 80px;
 
         color: $gray1;
         a{
             color: white;
 
         }
+    
 
         .actions {
             justify-self: end;

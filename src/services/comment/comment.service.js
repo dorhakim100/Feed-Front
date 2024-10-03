@@ -25,7 +25,10 @@ async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
   if (txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     comments = comments.filter(
-      (comment) => regex.test(comment.title) || regex.test(comment.txt)
+      (comment) =>
+        regex.test(comment.title) ||
+        regex.test(comment.text) ||
+        regex.test(comment.email)
     )
   }
   if (dateAdded) {
@@ -62,14 +65,18 @@ async function save(comment) {
   if (comment._id) {
     const commentToSave = {
       _id: comment._id,
-      txt: comment.txt,
+      email: comment.email,
+      title: comment.title,
+      text: comment.text,
       dateAdded: comment.dateAdded,
       owner: comment.owner,
     }
     savedComment = await storageService.put(STORAGE_KEY, commentToSave)
   } else {
     const commentToSave = {
-      txt: comment.txt,
+      email: comment.email,
+      title: comment.title,
+      text: comment.text,
       dateAdded: new Date().toISOString(),
       // Later, owner is set by the backend
       owner: userService.getLoggedinUser(),

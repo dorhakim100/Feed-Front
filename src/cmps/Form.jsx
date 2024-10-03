@@ -1,9 +1,35 @@
 import { useState, useEffect, useRef } from 'react'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Formik } from 'formik'
 import { Button } from '@mui/material'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
+import { addComment } from '../store/actions/comment.actions'
 
 export function Form() {
+  const user = useSelector((stateSelector) => stateSelector.userModule.user)
+  async function onSubmit(values) {
+    if (!user) {
+      showErrorMsg('Login first')
+      return
+    }
+    const { email, title, text } = values
+    const comment = {
+      email,
+      title,
+      text,
+      owner: { id: user._id, fullname: user.fullname, imgUrl: user.imgUrl },
+    }
+    // console.log(comment)
+    try {
+      const savedComment = await addComment(comment)
+      console.log(savedComment)
+      showSuccessMsg('Comment added')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg(`Couldn't add comment`)
+    }
+  }
   return (
     <Formik
       initialValues={{ email: '', password: '', title: '', text: '' }}
@@ -28,9 +54,10 @@ export function Form() {
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
+          //   alert(JSON.stringify(values, null, 2))
           setSubmitting(false)
         }, 400)
+        onSubmit(values)
       }}
     >
       {({
