@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
+import { Button } from '@mui/material'
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user)
@@ -22,7 +23,7 @@ export function AppHeader() {
     <header className='app-header full'>
       <nav>
         <NavLink to='/' className='logo'>
-          E2E Demo
+          Feed
         </NavLink>
         <NavLink to='comment'>Comments</NavLink>
 
@@ -40,7 +41,7 @@ export function AppHeader() {
               {user.fullname}
             </Link>
             {/* <span className="score">{user.score?.toLocaleString()}</span> */}
-            <button onClick={onLogout}>logout</button>
+            <button onClick={onLogout}>Logout</button>
           </div>
         )}
       </nav>

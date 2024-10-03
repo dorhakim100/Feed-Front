@@ -4,8 +4,10 @@
     display: grid;
     // grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
     grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: .5em;
-    height: calc(100vh - 112px - 490px);
+    height: calc(100vh - 112px);
     height: 250px;
     overflow: auto;
 
@@ -21,6 +23,10 @@
         a{
             color: white;
 
+        }
+
+        @media (max-width:620px) {
+            font-size: 0.8em;
         }
     
 

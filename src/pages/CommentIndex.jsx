@@ -65,9 +65,9 @@ export function CommentIndex() {
   return (
     <main className='comment-index'>
       <header>
-        {userService.getLoggedinUser() && (
+        {/* {userService.getLoggedinUser() && (
           <button onClick={onAddComment}>Add a Comment</button>
-        )}
+        )} */}
       </header>
       <Form />
       <CommentFilter filterBy={filterBy} setFilterBy={setFilterBy} />

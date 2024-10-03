@@ -4,7 +4,8 @@
     background-color: $primary-dark;
     color: white;
     padding: rem(10px) 1rem;
-
+    place-items: center;
+    
     a{
         color: white;
     }
@@ -13,36 +14,38 @@
         display: flex;
         width: 100%;
         align-items: center;
+        place-items: center;
         gap: 1em;
         
         font-size: .8em;
-
+        
         .active {
             color: $primary-contrast;
         }
-
+        
         .logo {
             font-size: 1.4em;
             font-weight: bold;
             margin-inline-end: 2em;
         }
-
+        
         .login-link {
             margin-inline-start: auto;
         }
-
+        
         button {
             margin-inline-end: 0;
         }
     }
-
+    
     .user-info {
         display: flex;
         align-items: center;
         margin-inline-start: auto;
-
+        place-items: center;
+        
         color: $clr1;
-
+        
         .score {
             padding: 8px;
             background-color: $clr2;

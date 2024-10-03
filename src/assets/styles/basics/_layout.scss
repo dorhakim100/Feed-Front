@@ -1,7 +1,8 @@
 .main-container {
   display: grid;
   grid-template-columns: 1rem 1fr 1rem;
-
+  height: calc(100vh);
+  overflow-y: auto;
 
   > * {
     grid-column: 2;
@@ -40,7 +41,18 @@
 main{
   justify-self: center;
   width: 580px;
-  height: calc(100vh - 112px);
+  min-height: calc(100vh - 112px);
+  height: max-content;
 
-  overflow-y: auto;
+
+  // display: grid;
+  // grid-template-columns: 1fr 580px 1fr;
+
+  @media (max-width:620px) {
+    width: 90vw;
+}
+
+  *{
+    // grid-column: 2/3;
+  }
 }

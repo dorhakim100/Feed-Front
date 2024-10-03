@@ -163,6 +163,146 @@ function _createComments() {
           'https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_female_user-512.png',
       },
     },
+    {
+      _id: 'k3f6a',
+      email: 'michael.brown@gmail.com',
+      title: 'Very Informative!',
+      txt: 'The insights you shared were extremely useful. Thanks for the clarity!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'b9x4m',
+        fullname: 'Michael Brown',
+        imgUrl:
+          'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png',
+      },
+    },
+    {
+      _id: 'k3f6a',
+      email: 'michael.brown@gmail.com',
+      title: 'Very Informative!',
+      txt: 'The insights you shared were extremely useful. Thanks for the clarity!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'b9x4m',
+        fullname: 'Michael Brown',
+        imgUrl:
+          'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png',
+      },
+    },
+    {
+      _id: 'l5g2d',
+      email: 'sara.connor@outlook.com',
+      title: 'Great Explanation',
+      txt: 'Your detailed explanation helped me understand the topic much better. Thank you!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'c7h9j',
+        fullname: 'Sara Connor',
+        imgUrl: 'https://cdn-icons-png.flaticon.com/512/194/194938.png',
+      },
+    },
+    {
+      _id: 'o7n1b',
+      email: 'steven.king@hotmail.com',
+      title: 'Highly Appreciated!',
+      txt: 'I appreciate the effort you put into addressing all my questions. Great work!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'j6f5e',
+        fullname: 'Steven King',
+        imgUrl:
+          'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg',
+      },
+    },
+    {
+      _id: 'p4l8v',
+      email: 'anna.baker@gmail.com',
+      title: 'Great Work!',
+      txt: 'Your dedication to the task really shows. Thank you for the fantastic support!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 't3r6z',
+        fullname: 'Anna Baker',
+        imgUrl:
+          'https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png',
+      },
+    },
+    {
+      _id: 'r6h7y',
+      email: 'emma.jones@aol.com',
+      title: 'Fantastic Service',
+      txt: 'The way you handled everything was very professional. Thanks a lot!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'v4t5u',
+        fullname: 'Emma Jones',
+        imgUrl: 'https://cdn-icons-png.flaticon.com/512/194/194935.png',
+      },
+    },
+    {
+      _id: 's8x3m',
+      email: 'daniel.carter@yahoo.com',
+      title: 'Thank You!',
+      txt: 'Thanks for your patience and detailed assistance. It was really helpful.',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'u1n2k',
+        fullname: 'Daniel Carter',
+        imgUrl:
+          'https://cdn1.iconfinder.com/data/icons/avatars-1-5/136/60-512.png',
+      },
+    },
+    {
+      _id: 't2d9k',
+      email: 'lucy.hale@gmail.com',
+      title: 'Well Done!',
+      txt: 'I really appreciate how you went the extra mile to provide support.',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'q7p8w',
+        fullname: 'Lucy Hale',
+        imgUrl:
+          'https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png',
+      },
+    },
+    {
+      _id: 'u9m5q',
+      email: 'robert.white@protonmail.com',
+      title: 'Thanks for the Effort',
+      txt: 'Thank you for addressing all my concerns in detail. Much appreciated!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'o3y2a',
+        fullname: 'Robert White',
+        imgUrl: 'https://cdn-icons-png.flaticon.com/512/194/194931.png',
+      },
+    },
+    {
+      _id: 'v6n4e',
+      email: 'nancy.davis@hotmail.com',
+      title: 'Very Helpful!',
+      txt: 'Thanks for the quick response and the clear guidance. You really helped me out.',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'l2h7r',
+        fullname: 'Nancy Davis',
+        imgUrl:
+          'https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png',
+      },
+    },
+    {
+      _id: 'w5t3o',
+      email: 'henry.martin@gmail.com',
+      title: 'Excellent Support',
+      txt: 'The support you provided was exceptional. Thanks a lot!',
+      dateAdded: '2024-10-02',
+      owner: {
+        id: 'n4b8f',
+        fullname: 'Henry Martin',
+        imgUrl:
+          'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
+      },
+    },
   ]
   localStorage.setItem(STORAGE_KEY, JSON.stringify(comments))
 }
