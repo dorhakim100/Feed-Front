@@ -5,6 +5,7 @@ import {
   REMOVE_COMMENT,
   SET_COMMENTS,
   SET_COMMENT,
+  SET_EDIT_COMMENT,
   UPDATE_COMMENT,
   ADD_COMMENT_MSG,
 } from '../reducers/comment.reducer'
@@ -59,6 +60,10 @@ export async function updateComment(comment) {
     console.log('Cannot save comment', err)
     throw err
   }
+}
+
+export function setEditComment(comment) {
+  store.dispatch({ type: SET_EDIT_COMMENT, editComment: comment })
 }
 
 export async function addCommentMsg(commentId, txt) {

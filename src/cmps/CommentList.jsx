@@ -1,7 +1,14 @@
 import { userService } from '../services/user/user.service'
 import { CommentPreview } from './CommentPreview'
+import { setEditComment } from '../store/actions/comment.actions'
 
-export function CommentList({ comments, onRemoveComment, onUpdateComment }) {
+export function CommentList({
+  comments,
+  onRemoveComment,
+  onUpdateComment,
+  isEdit,
+  setIsEdit,
+}) {
   function shouldShowActionBtns(comment) {
     const user = userService.getLoggedinUser()
 
@@ -15,11 +22,32 @@ export function CommentList({ comments, onRemoveComment, onUpdateComment }) {
       <ul className='list'>
         {comments.map((comment) => (
           <li key={comment._id}>
-            <CommentPreview comment={comment} />
+            <CommentPreview comment={comment} isEdit={isEdit} />
             {shouldShowActionBtns(comment) && (
               <div className='actions'>
-                <button onClick={() => onUpdateComment(comment)}>Edit</button>
-                <button onClick={() => onRemoveComment(comment._id)}>x</button>
+                {isEdit ? (
+                  <button onClick={() => onUpdateComment(comment)}>Save</button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsEdit(true)
+                      setEditComment(comment)
+                    }}
+                  >
+                    Edit
+                  </button>
+                )}
+                <button
+                  onClick={() => {
+                    if (isEdit) {
+                      setIsEdit(false)
+                      return
+                    }
+                    onRemoveComment(comment._id)
+                  }}
+                >
+                  x
+                </button>
               </div>
             )}
           </li>

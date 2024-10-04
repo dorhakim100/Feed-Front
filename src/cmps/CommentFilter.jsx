@@ -41,7 +41,7 @@ export function CommentFilter({ filterBy, setFilterBy }) {
   }
 
   function clearFilter() {
-    setFilterToEdit({ ...filterToEdit, txt: '' })
+    setFilterToEdit({ ...filterToEdit, txt: '', date: '' })
   }
 
   function clearSort() {
@@ -55,6 +55,12 @@ export function CommentFilter({ filterBy, setFilterBy }) {
       filterRef.current.style.height = '490.5px'
     }
     setIsCalender((prev) => (prev = !prev))
+  }
+
+  function handleDateChange(newDate) {
+    const dateToSet = newDate.format('DD-MM-YYYY')
+    console.log(filterToEdit)
+    setFilterToEdit({ ...filterToEdit, date: dateToSet })
   }
 
   return (
@@ -75,7 +81,7 @@ export function CommentFilter({ filterBy, setFilterBy }) {
       >
         <CalendarMonthIcon />
       </Button>
-      {isCalender && <Calender />}
+      {isCalender && <Calender handleDateChange={handleDateChange} />}
       <Button className='btn-clear' variant='contained' onClick={clearFilter}>
         Clear
       </Button>

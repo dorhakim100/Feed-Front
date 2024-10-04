@@ -13,7 +13,7 @@
 
     li {
         display: grid;
-        grid-template-columns: max-content auto;
+        grid-template-columns: 1fr 80px;
         padding: .5em;
         background-color: $primary-dark;
         border-radius: 5px;
@@ -32,9 +32,15 @@
 
         .actions {
             justify-self: end;
-
+            align-self: center;
             button {
                 padding: .3em .5em;
+                outline: 1px solid black;
+                transition: 0.1 ease-out;
+                &:hover{
+                    background-color: $hover-color;
+                    outline: 1px solid white;
+                }
             }
         }
     }

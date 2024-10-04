@@ -25,6 +25,10 @@ export function CommentIndex() {
   )
   // console.log(comments)
 
+  const [isEdit, setIsEdit] = useState(false)
+  const editComment = useSelector(
+    (stateSelector) => stateSelector.commentModule.editComment
+  )
   useEffect(() => {
     loadComments(filterBy)
   }, [filterBy])
@@ -38,25 +42,26 @@ export function CommentIndex() {
     }
   }
 
-  async function onAddComment() {
-    const comment = commentService.getEmptyComment()
-    comment.vendor = prompt('Vendor?')
+  async function onAddComment(comment) {
     try {
       const savedComment = await addComment(comment)
-      showSuccessMsg(`Comment added (id: ${savedComment._id})`)
+      console.log(savedComment)
+      showSuccessMsg('Comment added')
     } catch (err) {
-      showErrorMsg('Cannot add comment')
+      console.log(err)
+      showErrorMsg(`Couldn't add comment`)
     }
   }
 
   async function onUpdateComment(comment) {
-    const speed = +prompt('New speed?', comment.speed)
-    if (speed === 0 || speed === comment.speed) return
-
-    const commentToSave = { ...comment, speed }
+    // setIsEdit(true)
+    console.log(comment)
+    console.log(editComment)
+    // const commentToSave = { ...comment, speed }
     try {
-      const savedComment = await updateComment(commentToSave)
-      showSuccessMsg(`Comment updated, new speed: ${savedComment.speed}`)
+      const savedComment = await updateComment(editComment)
+      showSuccessMsg(`Comment updated`)
+      setIsEdit(false)
     } catch (err) {
       showErrorMsg('Cannot update comment')
     }
@@ -69,12 +74,14 @@ export function CommentIndex() {
           <button onClick={onAddComment}>Add a Comment</button>
         )} */}
       </header>
-      <Form />
+      <Form onAddComment={onAddComment} />
       <CommentFilter filterBy={filterBy} setFilterBy={setFilterBy} />
       <CommentList
         comments={comments}
         onRemoveComment={onRemoveComment}
         onUpdateComment={onUpdateComment}
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
       />
     </main>
   )

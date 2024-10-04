@@ -6,7 +6,7 @@ import { Button } from '@mui/material'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addComment } from '../store/actions/comment.actions'
 
-export function Form() {
+export function Form({ onAddComment }) {
   const user = useSelector((stateSelector) => stateSelector.userModule.user)
   async function onSubmit(values) {
     if (!user) {
@@ -22,12 +22,9 @@ export function Form() {
     }
     // console.log(comment)
     try {
-      const savedComment = await addComment(comment)
-      console.log(savedComment)
-      showSuccessMsg('Comment added')
+      await onAddComment(comment)
     } catch (err) {
       console.log(err)
-      showErrorMsg(`Couldn't add comment`)
     }
   }
   return (

@@ -1,6 +1,7 @@
 import { storageService } from '../async-storage.service'
 import { makeId } from '../util.service'
 import { userService } from '../user/user.service'
+import { showErrorMsg } from '../event-bus.service'
 
 const STORAGE_KEY = 'comment'
 
@@ -15,12 +16,13 @@ export const commentService = {
   remove,
   addCommentMsg,
   getDefaultFilter,
+  getEmptyComment,
 }
 window.cs = commentService
 
 async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
   var comments = await storageService.query(STORAGE_KEY)
-  const { txt, dateAdded, sortDir } = filterBy
+  const { txt, date, sortDir } = filterBy
 
   if (txt) {
     const regex = new RegExp(filterBy.txt, 'i')
@@ -31,7 +33,32 @@ async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
         regex.test(comment.email)
     )
   }
-  if (dateAdded) {
+  if (date) {
+    const [day, month, year] = date.split('-')
+    const d = new Date(`${year}-${month}-${day}`)
+
+    const filterUtc = d.getTime()
+
+    const millisecondsInAWeek = 7 * 24 * 60 * 60 * 1000
+
+    comments = comments.filter((comment) => {
+      const { dateAdded } = comment
+
+      // Split dateAdded (assuming it's in DD-MM-YYYY format)
+      const [addedDay, addedMonth, addedYear] = dateAdded.split('-')
+      const addedUtc = new Date(
+        `${addedYear}-${addedMonth}-${addedDay}`
+      ).getTime()
+
+      // Check if the comment was added within one week of the given date
+      const isWithinWeek = Math.abs(filterUtc - addedUtc) <= millisecondsInAWeek
+
+      if (isWithinWeek) {
+        return true
+      }
+
+      return false
+    })
   }
 
   if (sortDir !== undefined) {
@@ -39,6 +66,15 @@ async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
       return comment1.title.localeCompare(comment2.title) * sortDir
     })
   }
+  comments = comments.sort((comment1, comment2) => {
+    const [day1, month1, year1] = comment1.dateAdded.split('-')
+    const [day2, month2, year2] = comment2.dateAdded.split('-')
+
+    const date1 = new Date(`${year1}-${month1}-${day1}`)
+    const date2 = new Date(`${year2}-${month2}-${day2}`)
+
+    return (date1 - date2) * sortDir
+  })
 
   return comments
 }
@@ -63,6 +99,12 @@ async function remove(commentId) {
 async function save(comment) {
   var savedComment
   if (comment._id) {
+    console.log(comment)
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!regex.test(comment.email)) {
+      showErrorMsg('Enter valid email')
+      return
+    }
     const commentToSave = {
       _id: comment._id,
       email: comment.email,
@@ -73,11 +115,15 @@ async function save(comment) {
     }
     savedComment = await storageService.put(STORAGE_KEY, commentToSave)
   } else {
+    const date = new Date()
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(
+      date.getMonth() + 1
+    ).padStart(2, '0')}-${date.getFullYear()}`
     const commentToSave = {
       email: comment.email,
       title: comment.title,
       text: comment.text,
-      dateAdded: new Date().toISOString(),
+      dateAdded: formattedDate,
       // Later, owner is set by the backend
       owner: userService.getLoggedinUser(),
     }
@@ -104,8 +150,24 @@ async function addCommentMsg(commentId, txt) {
 function getDefaultFilter() {
   return {
     txt: '',
-    dateAdded: '',
+    date: '',
     sortDir: 1,
+  }
+}
+
+function getEmptyComment() {
+  return {
+    _id: '',
+    email: '',
+    title: '',
+    txt: '',
+    dateAdded: '',
+    owner: {
+      id: '',
+      fullname: '',
+      imgUrl:
+        'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png',
+    },
   }
 }
 
@@ -116,7 +178,7 @@ function _createComments() {
       email: 'dorhakim100@gmail.com',
       title: 'Grateful for the Help',
       txt: 'Thank you so much for the quick response and the detailed explanation. It really made a difference!',
-      dateAdded: '2024-09-28',
+      dateAdded: '30-09-2024',
       owner: {
         id: 'af8w2',
         fullname: 'Dor Hakim',
@@ -129,7 +191,7 @@ function _createComments() {
       email: 'john.doe@gmail.com',
       title: 'Fantastic Job!',
       txt: 'I just wanted to say that the work you delivered exceeded my expectations. Keep up the great effort!',
-      dateAdded: '2024-09-29',
+      dateAdded: '30-09-2024',
       owner: {
         id: 'a9k2l',
         fullname: 'John Doe',
@@ -142,7 +204,7 @@ function _createComments() {
       email: 'jane.smith@hotmail.com',
       title: 'Helpful and Clear',
       txt: 'The information you provided was extremely helpful. It really clarified a lot of things I had been struggling with.',
-      dateAdded: '2024-09-30',
+      dateAdded: '30-09-2024',
       owner: {
         id: 'd5p9x',
         fullname: 'Jane Smith',
@@ -155,7 +217,7 @@ function _createComments() {
       email: 'alice.wonder@aol.com',
       title: 'Much Appreciated',
       txt: 'I truly appreciate the effort and attention to detail in your response. It was exactly what I needed.',
-      dateAdded: '2024-10-01',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'e3r7v',
         fullname: 'Alice Wonder',
@@ -163,25 +225,13 @@ function _createComments() {
           'https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_female_user-512.png',
       },
     },
+
     {
       _id: 'k3f6a',
       email: 'michael.brown@gmail.com',
       title: 'Very Informative!',
       txt: 'The insights you shared were extremely useful. Thanks for the clarity!',
-      dateAdded: '2024-10-02',
-      owner: {
-        id: 'b9x4m',
-        fullname: 'Michael Brown',
-        imgUrl:
-          'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png',
-      },
-    },
-    {
-      _id: 'k3f6a',
-      email: 'michael.brown@gmail.com',
-      title: 'Very Informative!',
-      txt: 'The insights you shared were extremely useful. Thanks for the clarity!',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'b9x4m',
         fullname: 'Michael Brown',
@@ -194,7 +244,7 @@ function _createComments() {
       email: 'sara.connor@outlook.com',
       title: 'Great Explanation',
       txt: 'Your detailed explanation helped me understand the topic much better. Thank you!',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'c7h9j',
         fullname: 'Sara Connor',
@@ -206,7 +256,7 @@ function _createComments() {
       email: 'steven.king@hotmail.com',
       title: 'Highly Appreciated!',
       txt: 'I appreciate the effort you put into addressing all my questions. Great work!',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'j6f5e',
         fullname: 'Steven King',
@@ -219,7 +269,7 @@ function _createComments() {
       email: 'anna.baker@gmail.com',
       title: 'Great Work!',
       txt: 'Your dedication to the task really shows. Thank you for the fantastic support!',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 't3r6z',
         fullname: 'Anna Baker',
@@ -232,7 +282,7 @@ function _createComments() {
       email: 'emma.jones@aol.com',
       title: 'Fantastic Service',
       txt: 'The way you handled everything was very professional. Thanks a lot!',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'v4t5u',
         fullname: 'Emma Jones',
@@ -244,7 +294,7 @@ function _createComments() {
       email: 'daniel.carter@yahoo.com',
       title: 'Thank You!',
       txt: 'Thanks for your patience and detailed assistance. It was really helpful.',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'u1n2k',
         fullname: 'Daniel Carter',
@@ -257,7 +307,7 @@ function _createComments() {
       email: 'lucy.hale@gmail.com',
       title: 'Well Done!',
       txt: 'I really appreciate how you went the extra mile to provide support.',
-      dateAdded: '2024-10-02',
+      dateAdded: '01-10-2024',
       owner: {
         id: 'q7p8w',
         fullname: 'Lucy Hale',
@@ -270,7 +320,7 @@ function _createComments() {
       email: 'robert.white@protonmail.com',
       title: 'Thanks for the Effort',
       txt: 'Thank you for addressing all my concerns in detail. Much appreciated!',
-      dateAdded: '2024-10-02',
+      dateAdded: '02-10-2024',
       owner: {
         id: 'o3y2a',
         fullname: 'Robert White',
@@ -282,7 +332,7 @@ function _createComments() {
       email: 'nancy.davis@hotmail.com',
       title: 'Very Helpful!',
       txt: 'Thanks for the quick response and the clear guidance. You really helped me out.',
-      dateAdded: '2024-10-02',
+      dateAdded: '02-10-2024',
       owner: {
         id: 'l2h7r',
         fullname: 'Nancy Davis',
@@ -295,7 +345,7 @@ function _createComments() {
       email: 'henry.martin@gmail.com',
       title: 'Excellent Support',
       txt: 'The support you provided was exceptional. Thanks a lot!',
-      dateAdded: '2024-10-02',
+      dateAdded: '02-10-2024',
       owner: {
         id: 'n4b8f',
         fullname: 'Henry Martin',

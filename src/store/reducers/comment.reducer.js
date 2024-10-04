@@ -1,13 +1,17 @@
+import { commentService } from '../../services/comment/comment.service'
+
 export const SET_COMMENTS = 'SET_COMMENTS'
 export const SET_COMMENT = 'SET_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const ADD_COMMENT_MSG = 'ADD_COMMENT_MSG'
+export const SET_EDIT_COMMENT = 'SET_EDIT_COMMENT'
 
 const initialState = {
   comments: [],
   comment: null,
+  editComment: commentService.getEmptyComment(),
 }
 
 export function commentReducer(state = initialState, action) {
@@ -47,6 +51,11 @@ export function commentReducer(state = initialState, action) {
         },
       }
       break
+    case SET_EDIT_COMMENT:
+      newState = {
+        ...state,
+        editComment: action.editComment,
+      }
     default:
   }
   return newState
