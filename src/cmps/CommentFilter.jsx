@@ -59,7 +59,7 @@ export function CommentFilter({ filterBy, setFilterBy }) {
 
   function handleDateChange(newDate) {
     const dateToSet = newDate.format('DD-MM-YYYY')
-    console.log(filterToEdit)
+
     setFilterToEdit({ ...filterToEdit, date: dateToSet })
   }
 

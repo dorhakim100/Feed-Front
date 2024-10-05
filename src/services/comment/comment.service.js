@@ -1,5 +1,5 @@
 import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
+import { getRandomIntInclusive, makeId } from '../util.service'
 import { userService } from '../user/user.service'
 import { showErrorMsg } from '../event-bus.service'
 
@@ -17,10 +17,11 @@ export const commentService = {
   addCommentMsg,
   getDefaultFilter,
   getEmptyComment,
+  getRandomComments,
 }
 window.cs = commentService
 
-async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
+async function query(filterBy = { txt: '', date: '', sortDir: 1 }) {
   var comments = await storageService.query(STORAGE_KEY)
   const { txt, date, sortDir } = filterBy
 
@@ -59,6 +60,19 @@ async function query(filterBy = { txt: '', dateAdded: '', sortDir: 1 }) {
 
       return false
     })
+  }
+
+  if (filterBy.isRandom) {
+    let counter
+    comments.length > 10 ? (counter = 10) : (counter = comments.length)
+    const randomComments = []
+    const randomIdxs = []
+    for (let i = 0; i < counter; i++) {
+      const randomIdx = getRandomIntInclusive(0, counter, randomIdxs)
+      randomComments[i] = comments[randomIdx]
+      randomIdxs.push(randomIdx)
+    }
+    return randomComments
   }
 
   if (sortDir !== undefined) {
@@ -168,6 +182,23 @@ function getEmptyComment() {
       imgUrl:
         'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Free-File-Download.png',
     },
+  }
+}
+
+async function getRandomComments() {
+  let newDate = new Date()
+
+  let day = String(newDate.getDate()).padStart(2, '0') // Get the day, padded with 0 if necessary
+  let month = String(newDate.getMonth() + 1).padStart(2, '0') // Get the month (note: months are 0-indexed)
+  let year = newDate.getFullYear() // Get the year
+
+  const date = `${day}-${month}-${year}`
+  const filter = { date, isRandom: true }
+  try {
+    const comments = await query(filter)
+    return comments
+  } catch (err) {
+    console.log(err)
   }
 }
 

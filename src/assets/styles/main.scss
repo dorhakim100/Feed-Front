@@ -22,6 +22,7 @@
 @import "pages/UserDetails";
 @import "pages/TaskDetails";
 @import "pages/LoginSignup";
+@import "pages/CommentDetails.scss";
 
 // Components
 @import "cmps/list";
@@ -32,6 +33,7 @@
 @import "cmps/UserMsg";
 @import "cmps/Form.scss";
 
+@import "cmps/RandomComments.scss";
 @import "cmps/CommentFilter";
 @import "cmps/ReviewEdit";
 @import "cmps/ReviewList";

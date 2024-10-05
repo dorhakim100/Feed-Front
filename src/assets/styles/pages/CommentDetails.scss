@@ -1,0 +1,50 @@
+.comment-details-container{
+    background-color: $border-color;
+    color: $primary-dark;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    gap: 1em;
+
+    padding: 0.8em;
+
+    .user-container{
+        display: flex;
+        // flex-direction: column;
+        align-items: center;
+
+        b{
+            font-size: 1.5em;
+            align-self: end;
+        }
+        img{
+            height: 150px;
+            width: 150px;
+            object-fit: scale-down;
+            border-radius: 50%;
+            border: 1.5px solid $primary-color;
+            // padding: 5px;
+            
+        }
+    }
+    
+    .title-container{
+        align-self: center;
+        align-self: end;
+        justify-self: end;
+        display: flex;
+        // justify-content: space-between;
+        // flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        gap: 0.5em;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+    p{
+        grid-column: 1/-1;
+    }
+}

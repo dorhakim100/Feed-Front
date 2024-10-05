@@ -14,6 +14,7 @@ export async function loadComments(filterBy) {
   try {
     const comments = await commentService.query(filterBy)
     store.dispatch(getCmdSetComments(comments))
+    return comments
   } catch (err) {
     console.log('Cannot load comments', err)
     throw err

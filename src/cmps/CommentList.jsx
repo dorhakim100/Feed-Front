@@ -1,6 +1,8 @@
 import { userService } from '../services/user/user.service'
 import { CommentPreview } from './CommentPreview'
 import { setEditComment } from '../store/actions/comment.actions'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CloseIcon from '@mui/icons-material/Close'
 
 export function CommentList({
   comments,
@@ -46,7 +48,7 @@ export function CommentList({
                     onRemoveComment(comment._id)
                   }}
                 >
-                  x
+                  {isEdit ? <CloseIcon /> : <DeleteIcon />}
                 </button>
               </div>
             )}

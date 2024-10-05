@@ -1,0 +1,47 @@
+.random-comments-container{
+    display: grid;
+    gap: 1em;
+    padding: 1em;
+
+    .controller-container{
+
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        justify-content: space-around;
+    }
+}
+.random-comments-container.grid{
+    .controller-container{
+        grid-column: 1/-1;
+
+    }
+
+    grid-template-columns: repeat(2,1fr);
+}
+
+.comment-container{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 5px;
+    .head-container{
+        grid-column: 1/-1;
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+        justify-items: center;
+        padding: 1em 0em 1em 0em;
+        img{
+            width: 50px;
+
+        }
+        .title-container{
+            display: flex;
+            flex-direction: column;
+
+        }
+    }
+}
